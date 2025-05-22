@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phases of Integral University</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Clerk SDK -->
+  <script async crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_Y3J1Y2lhbC1tb3JheS04OS5jbGVyay5hY2NvdW50cy5kZXYk"
+    src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js">
+  </script>
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQYmyACPxbI3vPHFVTLVEX48Pt4X2pBPo&callback=initMap" async defer></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f2f9ff, #e0eaff);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .phase-section {
+      padding: 80px 0;
+    }
+
+    .phase-section h2 {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 60px;
+      color: #003366;
+    }
+
+    .phase-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .phase-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .phase-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .phase-card h3 {
+      font-size: 1.6rem;
+      color: #002244;
+      margin-top: 15px;
+    }
+
+    .phase-card p {
+      font-size: 1rem;
+      color: #444;
+      padding: 0 20px 20px;
+    }
+
+    .map-container {
+      height: 200px;
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .map-link {
+      display: block;
+      margin: 15px auto;
+      padding: 8px 15px;
+      background-color: #003366;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      width: fit-content;
+      transition: background-color 0.3s;
+    }
+
+    .map-link:hover {
+      background-color: #002244;
+      color: white;
+    }
+
+    footer {
+      background-color: #003366;
+      color: #ffffff;
+    }
+
+    #user-button {
+      margin-left: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .phase-section h2 {
+        font-size: 2rem;
+      }
+
+      .phase-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .phase-card img {
+        height: 180px;
+      }
+      
+      .map-container {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Virtual Campus Tour</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html" onclick="sessionStorage.removeItem('authRedirect')">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item">
+          <div class="d-flex align-items-center">
+            <div id="user-button"></div>
+            <button class="btn btn-outline-danger ms-2" id="sign-out-btn">Sign Out</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Phases Section -->
+<section class="phase-section">
+  <div class="container">
+    <h2>Phases of Integral University</h2>
+    <div class="row g-4">
+      <!-- Phase 1 -->
+      <div class="col-md-4">
+        <div class="phase-card">
+          <a href="phase1.html"><img src="front gate.JPG" alt="Phase 1"></a>
+          <h3>Phase 1: Integral University</h3>
+          <p>Explore the foundation and historic core of Integral University.</p>
+          
+          <!-- Map Container for Phase 1 -->
+          <div id="map-phase1" class="map-container"></div>
+          <a href="https://www.google.com/maps?q=26.958241142790616,80.99890303436656" class="map-link" target="_blank">Open in Google Maps</a>
+        </div>
+      </div>
+      
+      <!-- Phase 2 -->
+      <div class="col-md-4">
+        <div class="phase-card">
+          <a href="phase2.html"><img src="phase2.jpg" alt="Phase 2"></a>
+          <h3>Phase 2: Integral University</h3>
+          <p>Discover the expanded academic buildings and advanced labs.</p>
+          
+          <!-- Map Container for Phase 2 -->
+          <div id="map-phase2" class="map-container"></div>
+          <a href="https://www.google.com/maps?q=26.958890469787764,80.9947585636641" class="map-link" target="_blank">Open in Google Maps</a>
+        </div>
+      </div>
+      
+      <!-- Phase 3 -->
+      <div class="col-md-4">
+        <div class="phase-card">
+          <a href="phase3.html"><img src="phaq.JPG" alt="Phase 3"></a>
+          <h3>Phase 3: Integral University</h3>
+          <p>Explore the modern infrastructure and new learning spaces.</p>
+          
+          <!-- Map Container for Phase 3 -->
+          <div id="map-phase3" class="map-container"></div>
+          <a href="https://www.google.com/maps?q=27.017755219877166,81.02876553762417" class="map-link" target="_blank">Open in Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-3">
+  <p>&copy; 2025 Virtual Campus Tour. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Clerk Auth Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    try {
+      const Clerk = window.Clerk;
+      await Clerk.load({
+        publishableKey: "pk_test_Y3J1Y2lhbC1tb3JheS04OS5jbGVyay5hY2NvdW50cy5kZXYk",
+      });
+
+      if (!Clerk.user) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      Clerk.mountUserButton('#user-button');
+
+      document.getElementById('sign-out-btn').addEventListener('click', () => {
+        sessionStorage.removeItem('authRedirect');
+        Clerk.signOut(() => {
+          window.location.href = 'index.html';
+        });
+      });
+
+      Clerk.removeAllListeners();
+    } catch (error) {
+      console.error("Clerk initialization failed:", error);
+    }
+  });
+</script>
+
+<!-- Google Maps Script -->
+<script>
+  // Coordinates for each phase of Integral University
+  const phaseLocations = {
+    phase1: { 
+      lat: 26.958241142790616, 
+      lng: 80.99890303436656, 
+      title: "Phase 1: Integral University" 
+    },
+    phase2: { 
+      lat: 26.958890469787764, 
+      lng: 80.9947585636641, 
+      title: "Phase 2: Integral University" 
+    },
+    phase3: { 
+      lat: 27.017755219877166, 
+      lng: 81.02876553762417, 
+      title: "Phase 3: Integral University" 
+    }
+  };
+
+  function initMap() {
+    // Create a map for each phase
+    for (const phase in phaseLocations) {
+      const location = phaseLocations[phase];
+      const map = new google.maps.Map(document.getElementById(`map-${phase}`), {
+        center: location,
+        zoom: 16,
+        mapTypeId: 'hybrid',
+        styles: [
+          {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }]
+          }
+        ]
+      });
+      
+      // Add a marker for each phase
+      new google.maps.Marker({
+        position: location,
+        map: map,
+        title: location.title
+      });
+    }
+  }
+  
+  // Fallback in case Google Maps API fails to load
+  window.initMap = initMap;
+  
+  // If Google Maps API fails to load, hide the map containers
+  setTimeout(() => {
+    if (typeof google === 'undefined') {
+      document.querySelectorAll('.map-container').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+  }, 5000);
+</script>
+
+</body>
+</html>

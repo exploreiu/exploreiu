@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2 - Integral University</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #27ae60;
+      --accent-color: #e67e22;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .navbar {
+      background-color: var(--primary-color) !important;
+    }
+    
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .search-container {
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    .search-container input {
+      border-radius: 50px;
+      padding: 12px 25px 12px 50px;
+      border: 2px solid #ddd;
+      font-size: 1.1rem;
+    }
+    
+    .search-container i {
+      left: 25px;
+      color: var(--primary-color);
+    }
+    
+    .block-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      background-color: white;
+      cursor: pointer;
+    }
+    
+    .block-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .block-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .card-title {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-subtitle {
+      color: var(--secondary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .card-text {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    
+    .badge-faculty {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    
+    .badge-institute {
+      background-color: #3498db;
+      color: white;
+    }
+    
+    .badge-facility {
+      background-color: var(--accent-color);
+      color: white;
+    }
+    
+    .btn-explore {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      border: none;
+    }
+    
+    .btn-explore:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    .voice-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 2rem 0;
+      }
+      
+      .search-container {
+        padding: 0 15px;
+      }
+      
+      .card-img-top {
+        height: 150px;
+      }
+    }
+    
+    /* Modal Carousel Styles */
+    .carousel-item img {
+      max-height: 70vh;
+      object-fit: contain;
+      background-color: #f8f9fa;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      background-color: rgba(0,0,0,0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .carousel-indicators button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-university me-2"></i>Integral University
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="phase.html"><i class="fas fa-map-marked-alt me-1"></i> Phases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="phase2.html"><i class="fas fa-leaf me-1"></i> Phase 2</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container text-center">
+      <h1><i class="fas fa-leaf me-3"></i>Phase 2 Facilities</h1>
+      <p class="lead">Explore the specialized faculties and institutes in Phase 2 of Integral University</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="position-relative">
+        <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search for faculties, institutes, or facilities...">
+      </div>
+    </div>
+    
+    <!-- No Results Message -->
+    <div id="noResults" class="no-results">
+      <i class="fas fa-search fa-3x mb-3" style="color: #ccc;"></i>
+      <h3>No matching facilities found</h3>
+      <p class="text-muted">Try searching with different keywords</p>
+    </div>
+    
+    <!-- Blocks Grid -->
+    <div class="row g-4" id="blocksContainer">
+      <!-- Faculty of Pharmacy -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('pharmacy')" data-name="faculty of pharmacy block u" data-type="faculty" data-keywords="pharmacy medical drugs block u">
+          <div class="position-relative">
+            <img src="pharmacy.JPG" class="card-img-top" alt="Faculty of Pharmacy">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Faculty of Pharmacy (Block U)</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-faculty">Faculty</span></h6>
+            <p class="card-text">State-of-the-art pharmacy education with modern laboratories and research facilities.</p>
+            <a href="#" class="btn btn-explore" data-block="pharmacy"><i class="fas fa-prescription-bottle-alt me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Institute of Agriculture -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('agriculture')" data-name="institute of agriculture block t" data-type="institute" data-keywords="agriculture farming science block t">
+          <div class="position-relative">
+            <img src="agriculture.JPG" class="card-img-top" alt="Institute of Agriculture">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Institute of Agriculture (Block T)</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-institute">Institute</span></h6>
+            <p class="card-text">Advanced agricultural sciences and technology research center with experimental fields.</p>
+            <a href="#" class="btn btn-explore" data-block="agriculture"><i class="fas fa-tractor me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Block V -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('block-v')" data-name="block v" data-type="academic" data-keywords="classroom lecture block v">
+          <div class="position-relative">
+            <img src="block v.JPG" class="card-img-top" alt="Block V">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block V</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-faculty">Academic Block</span></h6>
+            <p class="card-text">Multi-disciplinary academic block with modern classrooms and seminar halls.</p>
+            <a href="#" class="btn btn-explore" data-block="block-v"><i class="fas fa-chalkboard-teacher me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Herbal Garden -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('herbal-garden')" data-name="herbal garden" data-type="facility" data-keywords="garden medicinal plants herbs">
+          <div class="position-relative">
+            <img src="herbal.JPG" class="card-img-top" alt="Herbal Garden">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Herbal Garden</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Research Facility</span></h6>
+            <p class="card-text">Extensive collection of medicinal plants and herbs for research and education.</p>
+            <a href="#" class="btn btn-explore" data-block="herbal-garden"><i class="fas fa-spa me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Canteen -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('phase2-canteen')" data-name="phase 2 canteen" data-type="facility" data-keywords="canteen food lunch snacks">
+          <div class="position-relative">
+            <img src="canteeeen.JPG" class="card-img-top" alt="Phase 2 Canteen">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Phase 2 Canteen</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Dining Facility</span></h6>
+            <p class="card-text">Spacious canteen serving healthy meals and snacks for students and staff.</p>
+            <a href="#" class="btn btn-explore" data-block="phase2-canteen"><i class="fas fa-utensils me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Faculty of Education -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('education')" data-name="faculty of education" data-type="faculty" data-keywords="education teaching training">
+          <div class="position-relative">
+            <img src="education.JPG" class="card-img-top" alt="Faculty of Education">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Faculty of Education</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-faculty">Faculty</span></h6>
+            <p class="card-text">Teacher education and pedagogical research center with demonstration schools.</p>
+            <a href="#" class="btn btn-explore" data-block="education"><i class="fas fa-graduation-cap me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>&copy; 2025 Integral University Virtual Campus. All rights reserved.</p>
+      <div class="mt-2">
+        <a href="#" class="text-white me-3"><i class="fas fa-map-marked-alt"></i> Campus Map</a>
+        <a href="#" class="text-white me-3"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#" class="text-white"><i class="fas fa-phone-alt"></i> Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script Section -->
+  <script>
+    // Voice greetings database with different modes
+    const voiceGreetings = {
+      "pharmacy": {
+        text: "Welcome to Faculty of Pharmacy in Block U. Here we have modern laboratories for pharmaceutical research and drug development. The building has three floors with research labs on each level.",
+        mode: "academic"
+      },
+      "agriculture": {
+        text: "Welcome to Institute of Agriculture in Block T. This center has advanced facilities for agricultural research, including experimental fields and biotechnology labs. Open from 8 AM to 6 PM.",
+        mode: "academic"
+      },
+      "block-v": {
+        text: "Welcome to Block V. This is a multi-disciplinary academic block with smart classrooms on ground floor and faculty offices on upper floors. The building also has a seminar hall with capacity of 200 people.",
+        mode: "academic"
+      },
+      "herbal-garden": {
+        text: "Welcome to our Herbal Garden. This open-air facility contains more than 200 species of medicinal plants used in traditional medicine. Guided tours are available every Friday at 4 PM.",
+        mode: "informational"
+      },
+      "phase2-canteen": {
+        text: "Welcome to Phase 2 Canteen. We serve delicious North Indian and South Indian meals from 8 AM to 8 PM. Special student discount available on showing ID card. Try our special thali today!",
+        mode: "casual"
+      },
+      "education": {
+        text: "Welcome to Faculty of Education. This department offers B.Ed and M.Ed programs with modern teaching labs and demonstration classrooms. The faculty office is open from 9 AM to 5 PM.",
+        mode: "academic"
+      }
+    };
+
+    // Block images database
+    const blockImages = {
+      "pharmacy": [
+        "pharmacy.JPG",
+        "images/pharmacy-1.jpg",
+        "images/pharmacy-2.jpg"
+      ],
+      "agriculture": [
+        "agriculture.JPG",
+        "images/agriculture-1.jpg",
+        "images/agriculture-2.jpg"
+      ],
+      "block-v": [
+        "block v.JPG",
+        "images/block-v-1.jpg",
+        "images/block-v-2.jpg"
+      ],
+      "herbal-garden": [
+        "herbal.JPG",
+        "images/herbal-1.jpg",
+        "images/herbal-2.jpg"
+      ],
+      "phase2-canteen": [
+        "canteeeen.JPG",
+        "images/canteen-1.jpg",
+        "images/canteen-2.jpg"
+      ],
+      "education": [
+        "education.JPG",
+        "images/education-1.jpg",
+        "images/education-2.jpg"
+      ]
+    };
+
+    // Function to speak with Indian accent
+    function speakWithIndianAccent(blockId) {
+      if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const speech = new SpeechSynthesisUtterance();
+        const greeting = voiceGreetings[blockId];
+        speech.text = greeting.text;
+        speech.volume = 1;
+        
+        // Set different parameters based on mode
+        switch(greeting.mode) {
+          case "academic":
+            speech.rate = 0.85;  // Slightly slower for academic buildings
+            speech.pitch = 1.1;  // Higher pitch for clarity
+            break;
+          case "informational":
+            speech.rate = 0.9;
+            speech.pitch = 1.0;
+            break;
+          case "casual":  // For canteens
+            speech.rate = 1.0;
+            speech.pitch = 1.2;  // More lively tone
+            break;
+          default:
+            speech.rate = 0.9;
+            speech.pitch = 1.0;
+        }
+
+        // Get available voices
+        const voices = window.speechSynthesis.getVoices();
+        
+        // Try to find an Indian-accented voice first
+        const preferredVoice = voices.find(voice => 
+          voice.name.includes('Google India English Female') ||  // Indian accent
+          voice.name.includes('Microsoft Ravi') ||              // Indian male voice
+          voice.name.includes('Microsoft Heera') ||             // Indian female voice
+          voice.name.includes('Microsoft Zira') ||              // Fallback 1
+          voice.name.includes('Samantha')                       // Fallback 2
+        );
+        
+        if (preferredVoice) {
+          speech.voice = preferredVoice;
+          
+          // Additional Indian accent adjustments
+          if (preferredVoice.name.includes('India') || 
+              preferredVoice.name.includes('Ravi') || 
+              preferredVoice.name.includes('Heera')) {
+            // Slight adjustments to make more Indian-accented
+            speech.rate = speech.rate * 0.95;  // Slightly slower
+            speech.pitch = speech.pitch * 1.05; // Slightly higher pitch
+          }
+        }
+        
+        window.speechSynthesis.speak(speech);
+      } else {
+        console.log("Text-to-speech not supported in this browser");
+      }
+    }
+
+    // Function to show block images in modal
+    function showBlockImages(blockId) {
+      const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      const images = blockImages[blockId] || [];
+      const carouselInner = document.getElementById('carouselInner');
+      const carouselIndicators = document.getElementById('carouselIndicators');
+      const modalTitle = document.getElementById('modalTitle');
+      
+      // Set modal title
+      const blockName = document.querySelector(`.block-card[onclick*="${blockId}"] .card-title`).textContent;
+      modalTitle.textContent = `${blockName} Images`;
+      
+      // Clear previous carousel items
+      carouselInner.innerHTML = '';
+      carouselIndicators.innerHTML = '';
+      
+      // Add new carousel items
+      images.forEach((img, index) => {
+        // Skip if image path is empty
+        if (!img) return;
+        
+        // Add indicator
+        const indicator = document.createElement('button');
+        indicator.type = 'button';
+        indicator.setAttribute('data-bs-target', '#blockCarousel');
+        indicator.setAttribute('data-bs-slide-to', index.toString());
+        indicator.className = index === 0 ? 'active' : '';
+        indicator.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        indicator.setAttribute('aria-label', `Slide ${index + 1}`);
+        carouselIndicators.appendChild(indicator);
+        
+        // Add carousel item
+        const carouselItem = document.createElement('div');
+        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        const imgElement = document.createElement('img');
+        imgElement.src = img;
+        imgElement.className = 'd-block w-100';
+        imgElement.alt = `${blockName} image ${index + 1}`;
+        imgElement.onerror = function() {
+          // If image fails to load, replace with a placeholder
+          this.src = 'https://via.placeholder.com/800x500?text=Image+Not+Available';
+        };
+        carouselItem.appendChild(imgElement);
+        carouselInner.appendChild(carouselItem);
+      });
+      
+      // Show the modal
+      modal.show();
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Chrome needs this to populate voices
+      if ('speechSynthesis' in window) {
+        speechSynthesis.onvoiceschanged = function() {
+          console.log("Voices loaded:", window.speechSynthesis.getVoices());
+        };
+        // Force voices to load
+        window.speechSynthesis.getVoices();
+      }
+
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const blockCards = document.querySelectorAll('.block-card');
+      const noResults = document.getElementById('noResults');
+      
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        let hasVisibleCards = false;
+        
+        blockCards.forEach(card => {
+          const name = card.getAttribute('data-name').toLowerCase();
+          const type = card.getAttribute('data-type').toLowerCase();
+          const keywords = card.getAttribute('data-keywords').toLowerCase();
+          
+          if (name.includes(searchTerm) || 
+              type.includes(searchTerm) || 
+              keywords.includes(searchTerm)) {
+            card.style.display = 'block';
+            hasVisibleCards = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // Show/hide no results message
+        noResults.style.display = hasVisibleCards || searchTerm === '' ? 'none' : 'block';
+      });
+      
+      // Add click handlers to all Explore buttons
+      document.querySelectorAll('.btn-explore').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const blockId = this.getAttribute('data-block');
+          showBlockImages(blockId);
+        });
+      });
+    });
+  </script>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Block Images</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="blockCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="carousel-inner" id="carouselInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#blockCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#blockCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

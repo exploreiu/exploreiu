@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1 - Integral University</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --sports-color: #27ae60;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .navbar {
+      background-color: var(--primary-color) !important;
+    }
+    
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .search-container {
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    .search-container input {
+      border-radius: 50px;
+      padding: 12px 25px 12px 50px;
+      border: 2px solid #ddd;
+      font-size: 1.1rem;
+    }
+    
+    .search-container i {
+      left: 25px;
+      color: var(--primary-color);
+    }
+    
+    .block-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      background-color: white;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .block-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      width: 100%;
+    }
+    
+    .block-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-title {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-subtitle {
+      color: var(--secondary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .card-text {
+      color: #555;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .badge-type {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    
+    .badge-facility {
+      background-color: var(--accent-color);
+      color: white;
+    }
+    
+    .badge-sports {
+      background-color: var(--sports-color);
+      color: white;
+    }
+    
+    .btn-explore {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      border: none;
+      align-self: flex-start;
+    }
+    
+    .btn-explore:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    .voice-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 2rem 0;
+      }
+      
+      .search-container {
+        padding: 0 15px;
+      }
+      
+      .card-img-top {
+        height: 150px;
+      }
+    }
+    /* Modal Carousel Styles */
+    .carousel-item img {
+      max-height: 70vh;
+      object-fit: contain;
+      background-color: #f8f9fa;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      background-color: rgba(0,0,0,0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .carousel-indicators button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-university me-2"></i>Integral University
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="phase.html"><i class="fas fa-map-marked-alt me-1"></i> Phases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="phase1.html"><i class="fas fa-building me-1"></i> Phase 1</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container text-center">
+      <h1><i class="fas fa-map-marked-alt me-3"></i>Phase 1 Facilities</h1>
+      <p class="lead">Explore all academic blocks and facilities in Phase 1 of Integral University</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="position-relative">
+        <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search for blocks, canteens, or facilities...">
+      </div>
+    </div>
+    
+    <!-- No Results Message -->
+    <div id="noResults" class="no-results">
+      <i class="fas fa-search fa-3x mb-3" style="color: #ccc;"></i>
+      <h3>No matching facilities found</h3>
+      <p class="text-muted">Try searching with different keywords</p>
+    </div>
+    
+    <!-- Blocks Grid -->
+    <div class="row g-4" id="blocksContainer">
+      <!-- Block A -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-a')" data-name="block a" data-type="academic" data-keywords="academic classroom cs computer science">
+          <div class="position-relative">
+            <img src="block A.JPG" class="card-img-top" alt="Block A">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block A</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text"> The administrative building and mosque.</p>
+            <a href="block-details.html?block=block-a" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Block B -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-b')" data-name="block b" data-type="academic" data-keywords="academic classroom humanities">
+          <div class="position-relative">
+            <img src="block B.JPG" class="card-img-top" alt="Block B">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block B</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text">The Engineering Department. This facility houses Computer Science, Mechanical, and Electronics Engineering programs with state-of-the-art labs.</p>
+            <a href="block-details.html?block=block-b" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      <!-- Block D -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-d')" data-name="block d" data-type="academic" data-keywords="academic classroom science">
+          <div class="position-relative">
+            <img src="block D.jpg" class="card-img-top" alt="Block D">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block D</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text">Basic sciences block with physics, chemistry, and biology laboratories.</p>
+            <a href="block-details.html?block=block-d" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Block E -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-e')" data-name="block e" data-type="academic" data-keywords="academic classroom management">
+          <div class="position-relative">
+            <img src="block E.jpg" class="card-img-top" alt="Block E">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block E</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text">Business and Management studies block with case study rooms.</p>
+            <a href="block-details.html?block=block-e" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Block F -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-f')" data-name="block f" data-type="academic" data-keywords="academic classroom research">
+          <div class="position-relative">
+            <img src="block F.jpg" class="card-img-top" alt="Block F">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block F</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text">Research block with postgraduate labs and faculty research offices.</p>
+            <a href="block-details.html?block=block-f" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+       <!-- Block J -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('block-j')" data-name="block J" data-type="academic" data-keywords="academic classroom engineering">
+          <div class="position-relative">
+            <img src="bock j.jpg" class="card-img-top" alt="Block J">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block J</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-type">Academic Block</span></h6>
+            <p class="card-text">The bachelore of medicine and bachelors of surgury builiding.</p>
+            <a href="block-details.html?block=block-j" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      <!-- Central Auditorium -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('central-auditorium')" data-name="central auditorium" data-type="facility" data-keywords="auditorium event conference hall">
+          <div class="position-relative">
+            <img src="auditorium.jpg" class="card-img-top" alt="Central Auditorium">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Central Auditorium</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">University Facility</span></h6>
+            <p class="card-text">500-seat auditorium for university events, conferences, and cultural programs.</p>
+            <a href="block-details.html?block=central-auditorium" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Central Library -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('central-library')" data-name="central library" data-type="facility" data-keywords="library books study resource">
+          <div class="position-relative">
+            <img src="library.jpg" class="card-img-top" alt="Central Library">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Central Library</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">University Facility</span></h6>
+            <p class="card-text">Main university library with extensive collections and study spaces.</p>
+            <a href="block-details.html?block=central-library" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- OPD -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('opd')" data-name="opd" data-type="medical" data-keywords="opd outpatient medical health">
+          <div class="position-relative">
+            <img src="opd.jpg" class="card-img-top" alt="OPD">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">OPD</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Medical Facility</span></h6>
+            <p class="card-text">Outpatient Department providing basic medical services to students and staff.</p>
+            <a href="block-details.html?block=opd" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hospital -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('hospital')" data-name="university hospital" data-type="medical" data-keywords="hospital medical emergency health">
+          <div class="position-relative">
+            <img src="hospital.jpg" class="card-img-top" alt="University Hospital">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">University Hospital</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Medical Facility</span></h6>
+            <p class="card-text">Full-service hospital with inpatient facilities and specialized care.</p>
+            <a href="block-details.html?block=hospital" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Emergency -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('emergency')" data-name="emergency" data-type="medical" data-keywords="emergency medical urgent health">
+          <div class="position-relative">
+            <img src="emegency.jpg" class="card-img-top" alt="Emergency">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Emergency</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Medical Facility</span></h6>
+            <p class="card-text">24/7 emergency medical services for the university community.</p>
+            <a href="block-details.html?block=emergency" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- GYM -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('gym')" data-name="gym" data-type="canteen" data-keywords="fitness">
+          <div class="position-relative">
+            <img src="gym.jpg" class="card-img-top" alt="gym">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">GYM</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Canteen</span></h6>
+            <p class="card-text">Body building </p>
+            <a href="block-details.html?block=gym" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Central Canteen -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('central-canteen')" data-name="central canteen" data-type="canteen" data-keywords="canteen food lunch main">
+          <div class="position-relative">
+            <img src="central canteen.jpg" class="card-img-top" alt="Central Canteen">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Central Canteen</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Canteen</span></h6>
+            <p class="card-text">Main university canteen serving breakfast, lunch, and snacks.</p>
+            <a href="block-details.html?block=central-canteen" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Nuttrifresh -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('nuttrifresh')" data-name="nuttrifresh" data-type="canteen" data-keywords="canteen food healthy juice">
+          <div class="position-relative">
+            <img src="nutri.jpg" class="card-img-top" alt="Nuttrifresh">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Nuttrifresh</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Canteen</span></h6>
+            <p class="card-text">Healthy food options, fresh juices, and diet-conscious meals.</p>
+            <a href="block-details.html?block=nutrifresh" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Yuba Cafe -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('yuba-cafe')" data-name="yuba cafe" data-type="canteen" data-keywords="canteen coffee cafe snacks">
+          <div class="position-relative">
+            <img src="yuba.jpg" class="card-img-top" alt="Yuba Cafe">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Yuba Cafe</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Canteen</span></h6>
+            <p class="card-text">Coffee shop atmosphere with snacks and beverages.</p>
+            <a href="block-details.html?block=yuba" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- University Ground -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakGreeting('university-ground')" data-name="university ground" data-type="facility" data-keywords="ground field sports playground outdoor">
+          <div class="position-relative">
+            <img src="gground.jpg" class="card-img-top" alt="University Ground">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">University Ground</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-sports">Sports Facility</span></h6>
+            <p class="card-text">Spacious outdoor ground for sports, events, and recreational activities.</p>
+            <a href="block-details.html?block=university-ground" class="btn btn-explore"><i class="fas fa-directions me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>&copy; 2025 Integral University Virtual Campus. All rights reserved.</p>
+      <div class="mt-2">
+        <a href="#" class="text-white me-3"><i class="fas fa-map-marked-alt"></i> Campus Map</a>
+        <a href="#" class="text-white me-3"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#" class="text-white"><i class="fas fa-phone-alt"></i> Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script Section -->
+  <script>
+    // Voice greetings database
+    const voiceGreetings = {
+      "block-a": "Welcome to Block A, the administrative building and mosque.",
+      "block-b": "Welcome to Block B, the Engineering Department. This facility houses Computer Science, Mechanical, and Electronics Engineering programs with state-of-the-art labs.",
+      "block-d": "Welcome to Block D, the Basic Sciences building. This facility contains Physics, Chemistry, and Biology laboratories for practical sessions and research.",
+      "block-e": "Welcome to Block E, the Management Studies block. This building features case study rooms, a business lab, and faculty offices for Business Administration programs.",
+      "block-f": "Welcome to Block F, our Research Center. This facility houses postgraduate research labs, faculty research offices, and specialized equipment for advanced studies.",
+      "block-j": "Welcome to Block J, the bachelore of medicine and bachelors of surgury builiding.",
+      "central-auditorium": "Welcome to the Central Auditorium. This 500-seat venue hosts university convocations, cultural performances, and academic conferences with advanced audio-visual systems.",
+      "central-library": "Welcome to the Central Library. This four-story facility contains over 100,000 volumes, digital research databases, and quiet study areas for students and faculty.",
+      "opd": "Welcome to the Outpatient Department. This medical facility provides basic healthcare services to students and staff from 8 AM to 8 PM daily.",
+      "hospital": "Welcome to the University Hospital. This full-service medical center offers inpatient and outpatient care with specialist doctors and diagnostic facilities.",
+      "emergency": "Welcome to the Emergency Department. This 24/7 facility handles medical emergencies with trained staff and emergency treatment rooms.",
+      "gym": "Welcome to the University Gym. This fitness center is equipped with modern exercise machines and offers various fitness programs.",
+      "central-canteen": "Welcome to the Central Canteen. The main dining facility serving breakfast, lunch, and snacks from 7:30 AM to 7:30 PM with seating for 200 people.",
+      "nuttrifresh": "Welcome to Nuttrifresh healthy food outlet. Enjoy fresh juices, salads, and diet-conscious meals here from 8 AM to 8 PM on weekdays.",
+      "yuba-cafe": "Welcome to Yuba Cafe. This coffee shop offers beverages, sandwiches, and light snacks in a relaxed atmosphere from 9 AM to 9 PM daily.",
+      "university-ground": "Welcome to the University Ground. This expansive outdoor space features a cricket pitch, football field, and running track. It hosts sports events, annual convocations, and outdoor activities throughout the year."
+    };
+
+    // Block images database
+    const blockImages = {
+      "block-a": [
+        "block A.JPG",
+        "images/block-a-1.jpg",
+        "images/block-a-2.jpg",
+        "images/block-a-3.jpg"
+      ],
+      "block-b": [
+        "block B.JPG",
+        "C2.jpg",
+        "C3.jpg",
+        "C4.jpg",
+        "C5.jpg",
+        "C6.jpg",
+        "lab2.jpg",
+        "Computer lab.jpg",
+        "LL3.jpg",
+        "D1.jpg"
+      
+      ],
+      "block-d": [
+        "block D.jpg",
+        "C2.jpg",
+        "C4.jpg",
+        "C5.jpg",
+        "C6.jpg"
+        
+      ],
+      "block-e": [
+        "block E.jpg",
+        "E1.jpg",
+        "EE.jpg",
+        "C2.jpg",
+        "C4.jpg",
+        "C5.jpg",
+        "C6.jpg"
+      ],
+      "block-f": [
+        "block F.jpg",
+        "20250522_122433.jpg",
+        "C2.jpg",
+        "C4.jpg",
+        "lab1.jpg",
+        "lab.jpg",
+        "C5.jpg",
+        "C6.jpg"
+      ],
+      "block-j": [
+        "bock j.jpg",
+        
+      ],
+      "central-auditorium": [
+        "auditorium.jpg",
+        "A1.jpg",
+        "A2.jpg",
+        "A3.jpg",
+        "A4.jpg",
+        "A5.jpg",
+        "A6.jpg",
+        "A7.jpg"
+
+      ],
+      "central-library": [
+        "library.jpg",
+        "L1.jpg",
+        "L2.jpg",
+        "L7.jpg",
+        "L3.jpg",
+        "L4.jpg"
+      ],
+      "opd": [
+        "opd.jpg",
+        "O1.jpg",
+        "O2.jpg",
+        "O3.jpg",
+        "O4.jpg",
+        "O6.jpg"
+
+      ],
+      "hospital": [
+        "hospital.jpg",
+        "H1.jpg",
+        "H2.jpg",
+        "H3.jpg",
+        "H4.jpg"
+
+      ],
+      "emergency": [
+        "emegency.jpg",
+        "H1.jpg",
+        "H2.jpg",
+        "H3.jpg",
+        "H4.jpg"
+
+        
+      ],
+      "gym": [
+        "gym.jpg",
+        "images/gym-1.jpg"
+      ],
+      "central-canteen": [
+        "central canteen.jpg",
+        "CCC2.jpg",
+        "CC3.jpg"
+      ],
+      "nuttrifresh": [
+        "nutri.jpg",
+        "N1.jpg",
+        "N1.jpg"
+      ],
+      "yuba-cafe": [
+        "yuba.jpg",
+        "20250522_121211.jpg"
+      ],
+      "university-ground": [
+        "gground.jpg",
+        "ground1.jpg",
+        "ground2.jpg",
+        "ground4.jpg",
+        "ground5.jpg"
+      ]
+    };
+
+    // Function to speak the greeting
+    function speakGreeting(blockId) {
+      if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = voiceGreetings[blockId];
+        speech.volume = 1;
+        speech.rate = 0.9;
+        speech.pitch = 1;
+        
+        // Get available voices
+        const voices = window.speechSynthesis.getVoices();
+        
+        // Try to find a suitable voice
+        const preferredVoice = voices.find(voice => 
+          voice.name.includes('Google India English Female') ||
+          voice.name.includes('Microsoft Zira') || 
+          voice.name.includes('Samantha')
+        );
+        
+        if (preferredVoice) {
+          speech.voice = preferredVoice;
+        }
+        
+        window.speechSynthesis.speak(speech);
+      } else {
+        console.log("Text-to-speech not supported in this browser");
+      }
+    }
+
+    // Function to show block images in modal
+    function showBlockImages(blockId) {
+      const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      const images = blockImages[blockId] || [];
+      const carouselInner = document.getElementById('carouselInner');
+      const carouselIndicators = document.getElementById('carouselIndicators');
+      const modalTitle = document.getElementById('modalTitle');
+      
+      // Set modal title
+      const blockName = document.querySelector(`.block-card[onclick*="${blockId}"] .card-title`).textContent;
+      modalTitle.textContent = `${blockName} Images`;
+      
+      // Clear previous carousel items
+      carouselInner.innerHTML = '';
+      carouselIndicators.innerHTML = '';
+      
+      // Add new carousel items
+      images.forEach((img, index) => {
+        // Skip if image path is empty
+        if (!img) return;
+        
+        // Add indicator
+        const indicator = document.createElement('button');
+        indicator.type = 'button';
+        indicator.setAttribute('data-bs-target', '#blockCarousel');
+        indicator.setAttribute('data-bs-slide-to', index.toString());
+        indicator.className = index === 0 ? 'active' : '';
+        indicator.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        indicator.setAttribute('aria-label', `Slide ${index + 1}`);
+        carouselIndicators.appendChild(indicator);
+        
+        // Add carousel item
+        const carouselItem = document.createElement('div');
+        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        const imgElement = document.createElement('img');
+        imgElement.src = img;
+        imgElement.className = 'd-block w-100';
+        imgElement.alt = `${blockName} image ${index + 1}`;
+        imgElement.onerror = function() {
+          // If image fails to load, replace with a placeholder
+          this.src = 'https://via.placeholder.com/800x500?text=Image+Not+Available';
+        };
+        carouselItem.appendChild(imgElement);
+        carouselInner.appendChild(carouselItem);
+      });
+      
+      // Show the modal
+      modal.show();
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Chrome needs this to populate voices
+      if ('speechSynthesis' in window) {
+        speechSynthesis.onvoiceschanged = function() {
+          console.log("Voices loaded");
+        };
+        // Force voices to load
+        window.speechSynthesis.getVoices();
+      }
+
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const blockCards = document.querySelectorAll('.block-card');
+      const noResults = document.getElementById('noResults');
+      
+        searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        let hasVisibleCards = false;
+        
+        blockCards.forEach(card => {
+          const name = card.getAttribute('data-name').toLowerCase();
+          const type = card.getAttribute('data-type').toLowerCase();
+          const keywords = card.getAttribute('data-keywords').toLowerCase();
+          
+          if (name.includes(searchTerm) || 
+              type.includes(searchTerm) || 
+              keywords.includes(searchTerm)) {
+            card.style.display = 'block';
+            hasVisibleCards = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // Show/hide no results message
+        noResults.style.display = hasVisibleCards || searchTerm === '' ? 'none' : 'block';
+      });
+      
+      // Add click handlers to all Explore buttons
+      document.querySelectorAll('.btn-explore').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Get the block ID from the href attribute
+          const href = this.getAttribute('href');
+          const blockId = href.match(/block=(.*)/)[1];
+          showBlockImages(blockId);
+        });
+      });
+    });
+  </script>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Block Images</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="blockCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="carousel-inner" id="carouselInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#blockCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#blockCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

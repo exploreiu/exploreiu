@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3 - Integral University</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #8e44ad;
+      --accent-color: #f39c12;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .navbar {
+      background-color: var(--primary-color) !important;
+    }
+    
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem 0;
+      margin-bottom: 2rem;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    .search-container {
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    .search-container input {
+      border-radius: 50px;
+      padding: 12px 25px 12px 50px;
+      border: 2px solid #ddd;
+      font-size: 1.1rem;
+    }
+    
+    .search-container i {
+      left: 25px;
+      color: var(--primary-color);
+    }
+    
+    .block-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+      background-color: white;
+      cursor: pointer;
+    }
+    
+    .block-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .block-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .card-title {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-subtitle {
+      color: var(--secondary-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .card-text {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    
+    .badge-academic {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+    
+    .badge-facility {
+      background-color: var(--accent-color);
+      color: white;
+    }
+    
+    .badge-service {
+      background-color: #3498db;
+      color: white;
+    }
+    
+    .btn-explore {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      border: none;
+    }
+    
+    .btn-explore:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    .voice-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 2rem 0;
+      }
+      
+      .search-container {
+        padding: 0 15px;
+      }
+      
+      .card-img-top {
+        height: 150px;
+      }
+    }
+    
+    /* Modal Carousel Styles */
+    .carousel-item img {
+      max-height: 70vh;
+      object-fit: contain;
+      background-color: #f8f9fa;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      background-color: rgba(0,0,0,0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .carousel-indicators button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-university me-2"></i>Integral University
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="phase.html"><i class="fas fa-map-marked-alt me-1"></i> Phases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="phase1.html"><i class="fas fa-building me-1"></i> Phase 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="phase2.html"><i class="fas fa-leaf me-1"></i> Phase 2</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="phase3.html"><i class="fas fa-store me-1"></i> Phase 3</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container text-center">
+      <h1><i class="fas fa-store me-3"></i>Phase 3 Facilities</h1>
+      <p class="lead">Explore the academic and service facilities in Phase 3 of Integral University</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="position-relative">
+        <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Search for blocks, facilities, or services...">
+      </div>
+    </div>
+    
+    <!-- No Results Message -->
+    <div id="noResults" class="no-results">
+      <i class="fas fa-search fa-3x mb-3" style="color: #ccc;"></i>
+      <h3>No matching facilities found</h3>
+      <p class="text-muted">Try searching with different keywords</p>
+    </div>
+    
+    <!-- Blocks Grid -->
+    <div class="row g-4" id="blocksContainer">
+      <!-- Block A -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('block a')" data-name="block a" data-type="academic" data-keywords="classroom lecture academic">
+          <div class="position-relative">
+            <img src="aaaaaa.JPG" class="card-img-top" alt="Block A">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block A</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-academic">Academic Block</span></h6>
+            <p class="card-text">Main academic building with modern classrooms and faculty offices.</p>
+            <a href="#" class="btn btn-explore" data-block="block-a"><i class="fas fa-chalkboard-teacher me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Block B -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('block b')" data-name="block b" data-type="academic" data-keywords="classroom lecture academic">
+          <div class="position-relative">
+            <img src="bbbbb.JPG" class="card-img-top" alt="Block B">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Block B</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-academic">Academic Block</span></h6>
+            <p class="card-text">Secondary academic building with specialized labs and seminar rooms.</p>
+            <a href="#" class="btn btn-explore" data-block="block-b"><i class="fas fa-flask me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Auditorium -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('auditorium')" data-name="auditorium" data-type="facility" data-keywords="event conference performance hall">
+          <div class="position-relative">
+            <img src="mmmmmm.JPG" class="card-img-top" alt="Auditorium">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">University Auditorium</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-facility">Event Facility</span></h6>
+            <p class="card-text">600-seat auditorium for university events, conferences, and cultural programs.</p>
+            <a href="#" class="btn btn-explore" data-block="auditorium"><i class="fas fa-theater-masks me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Lecture Theatre -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('lecture theatre')" data-name="lecture theatre" data-type="academic" data-keywords="lecture classroom presentation">
+          <div class="position-relative">
+            <img src="lecture.JPG" class="card-img-top" alt="Lecture Theatre">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Lecture Theatre</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-academic">Academic Facility</span></h6>
+            <p class="card-text">300-seat tiered lecture theater with advanced audio-visual equipment.</p>
+            <a href="#" class="btn btn-explore" data-block="lecture-theatre"><i class="fas fa-chalkboard me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Shopping Center -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('shopping center')" data-name="shopping center" data-type="service" data-keywords="shop store retail food">
+          <div class="position-relative">
+            <img src="shopping.JPG" class="card-img-top" alt="Shopping Center">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">University Shopping Center</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-service">Retail Facility</span></h6>
+            <p class="card-text">Convenience stores, bookshop, and food outlets for campus needs.</p>
+            <a href="#" class="btn btn-explore" data-block="shopping-center"><i class="fas fa-shopping-bag me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Visitor Room -->
+      <div class="col-lg-4 col-md-6">
+        <div class="block-card" onclick="speakWithIndianAccent('visitor room')" data-name="visitor room" data-type="service" data-keywords="guest visitor reception meeting">
+          <div class="position-relative">
+            <img src="visitor.JPG" class="card-img-top" alt="Visitor Room">
+            <span class="voice-indicator"><i class="fas fa-volume-up"></i> Voice Guide</span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Visitor Reception</h5>
+            <h6 class="card-subtitle mb-2"><span class="badge badge-service">Guest Facility</span></h6>
+            <p class="card-text">Comfortable reception area for university visitors and guests.</p>
+            <a href="#" class="btn btn-explore" data-block="visitor-room"><i class="fas fa-hands-helping me-2"></i>Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <p>&copy; 2025 Integral University Virtual Campus. All rights reserved.</p>
+      <div class="mt-2">
+        <a href="#" class="text-white me-3"><i class="fas fa-map-marked-alt"></i> Campus Map</a>
+        <a href="#" class="text-white me-3"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#" class="text-white"><i class="fas fa-phone-alt"></i> Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script Section -->
+  <script>
+    // Voice greetings database with different modes
+    const voiceGreetings = {
+      "block a": {
+        text: "Welcome to Block A, the main academic building of Phase 3. This building houses the Computer Science and Engineering departments. It features 20 modern classrooms, 5 computer labs, and faculty offices. The building is open from 8 AM to 8 PM on weekdays.",
+        mode: "academic"
+      },
+      "block b": {
+        text: "Welcome to Block B, the secondary academic building in Phase 3. This facility contains specialized labs for Electrical and Mechanical Engineering, along with seminar rooms and faculty offices. The building is connected to Block A by a covered walkway.",
+        mode: "academic"
+      },
+      "auditorium": {
+        text: "Welcome to the University Auditorium. This 600-seat facility hosts major university events, conferences, and cultural programs. It features state-of-the-art audio-visual equipment and is located in the center of Phase 3 for easy access from all directions.",
+        mode: "informational"
+      },
+      "lecture theatre": {
+        text: "Welcome to the Lecture Theatre. This 300-seat tiered facility is equipped with advanced presentation technology, including multiple projectors and a professional sound system. It is primarily used for large classes and guest lectures.",
+        mode: "academic"
+      },
+      "shopping center": {
+        text: "Welcome to the University Shopping Center. Here you'll find a bookstore, convenience store, three food outlets, ATM machines, and a stationery shop. The center is located near the south entrance of Phase 3, close to the parking area.",
+        mode: "casual"
+      },
+      "visitor room": {
+        text: "Welcome to the Visitor Reception. This comfortable waiting area serves all university guests with an information desk, meeting rooms, and refreshment area. Campus maps and visitor guides are available here. It's located just inside the main entrance to Phase 3.",
+        mode: "informational"
+      }
+    };
+
+    // Block images database
+    const blockImages = {
+      "block-a": [
+        "aaaaaa.JPG",
+        "images/block-a-1.jpg",
+        "images/block-a-2.jpg"
+      ],
+      "block-b": [
+        "bbbbb.JPG",
+        "images/block-b-1.jpg",
+        "images/block-b-2.jpg"
+      ],
+      "auditorium": [
+        "mmmmmm.JPG",
+        "images/auditorium-1.jpg",
+        "images/auditorium-2.jpg"
+      ],
+      "lecture-theatre": [
+        "lecture.JPG",
+        "images/lecture-1.jpg",
+        "images/lecture-2.jpg"
+      ],
+      "shopping-center": [
+        "shopping.JPG",
+        "images/shopping-1.jpg",
+        "images/shopping-2.jpg"
+      ],
+      "visitor-room": [
+        "visitor.JPG",
+        "images/visitor-1.jpg",
+        "images/visitor-2.jpg"
+      ]
+    };
+
+    // Function to speak with Indian accent
+    function speakWithIndianAccent(blockId) {
+      if ('speechSynthesis' in window) {
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const speech = new SpeechSynthesisUtterance();
+        const greeting = voiceGreetings[blockId.toLowerCase()];
+        speech.text = greeting.text;
+        speech.volume = 1;
+        
+        // Set different parameters based on mode
+        switch(greeting.mode) {
+          case "academic":
+            speech.rate = 0.85;  // Slightly slower for academic buildings
+            speech.pitch = 1.1;  // Higher pitch for clarity
+            break;
+          case "informational":
+            speech.rate = 0.9;
+            speech.pitch = 1.0;
+            break;
+          case "casual":  // For shopping/casual areas
+            speech.rate = 1.0;
+            speech.pitch = 1.2;  // More lively tone
+            break;
+          default:
+            speech.rate = 0.9;
+            speech.pitch = 1.0;
+        }
+
+        // Get available voices
+        const voices = window.speechSynthesis.getVoices();
+        
+        // Try to find an Indian-accented voice first
+        const preferredVoice = voices.find(voice => 
+          voice.name.includes('Google India English Female') ||  // Indian accent
+          voice.name.includes('Microsoft Ravi') ||              // Indian male voice
+          voice.name.includes('Microsoft Heera') ||             // Indian female voice
+          voice.name.includes('Microsoft Zira') ||              // Fallback 1
+          voice.name.includes('Samantha')                       // Fallback 2
+        );
+        
+        if (preferredVoice) {
+          speech.voice = preferredVoice;
+          
+          // Additional Indian accent adjustments
+          if (preferredVoice.name.includes('India') || 
+              preferredVoice.name.includes('Ravi') || 
+              preferredVoice.name.includes('Heera')) {
+            // Slight adjustments to make more Indian-accented
+            speech.rate = speech.rate * 0.95;  // Slightly slower
+            speech.pitch = speech.pitch * 1.05; // Slightly higher pitch
+          }
+        }
+        
+        window.speechSynthesis.speak(speech);
+      } else {
+        console.log("Text-to-speech not supported in this browser");
+      }
+    }
+
+    // Function to show block images in modal
+    function showBlockImages(blockId) {
+      const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      const images = blockImages[blockId] || [];
+      const carouselInner = document.getElementById('carouselInner');
+      const carouselIndicators = document.getElementById('carouselIndicators');
+      const modalTitle = document.getElementById('modalTitle');
+      
+      // Set modal title
+      const blockName = document.querySelector(`.block-card[onclick*="${blockId.toLowerCase()}"] .card-title`).textContent;
+      modalTitle.textContent = `${blockName} Images`;
+      
+      // Clear previous carousel items
+      carouselInner.innerHTML = '';
+      carouselIndicators.innerHTML = '';
+      
+      // Add new carousel items
+      images.forEach((img, index) => {
+        // Skip if image path is empty
+        if (!img) return;
+        
+        // Add indicator
+        const indicator = document.createElement('button');
+        indicator.type = 'button';
+        indicator.setAttribute('data-bs-target', '#blockCarousel');
+        indicator.setAttribute('data-bs-slide-to', index.toString());
+        indicator.className = index === 0 ? 'active' : '';
+        indicator.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        indicator.setAttribute('aria-label', `Slide ${index + 1}`);
+        carouselIndicators.appendChild(indicator);
+        
+        // Add carousel item
+        const carouselItem = document.createElement('div');
+        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        const imgElement = document.createElement('img');
+        imgElement.src = img;
+        imgElement.className = 'd-block w-100';
+        imgElement.alt = `${blockName} image ${index + 1}`;
+        imgElement.onerror = function() {
+          // If image fails to load, replace with a placeholder
+          this.src = 'https://via.placeholder.com/800x500?text=Image+Not+Available';
+        };
+        carouselItem.appendChild(imgElement);
+        carouselInner.appendChild(carouselItem);
+      });
+      
+      // Show the modal
+      modal.show();
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Chrome needs this to populate voices
+      if ('speechSynthesis' in window) {
+        speechSynthesis.onvoiceschanged = function() {
+          console.log("Voices loaded:", window.speechSynthesis.getVoices());
+        };
+        // Force voices to load
+        window.speechSynthesis.getVoices();
+      }
+
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const blockCards = document.querySelectorAll('.block-card');
+      const noResults = document.getElementById('noResults');
+      
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        let hasVisibleCards = false;
+        
+        blockCards.forEach(card => {
+          const name = card.getAttribute('data-name').toLowerCase();
+          const type = card.getAttribute('data-type').toLowerCase();
+          const keywords = card.getAttribute('data-keywords').toLowerCase();
+          
+          if (name.includes(searchTerm) || 
+              type.includes(searchTerm) || 
+              keywords.includes(searchTerm)) {
+            card.style.display = 'block';
+            hasVisibleCards = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // Show/hide no results message
+        noResults.style.display = hasVisibleCards || searchTerm === '' ? 'none' : 'block';
+      });
+      
+      // Add click handlers to all Explore buttons
+      document.querySelectorAll('.btn-explore').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const blockId = this.getAttribute('data-block');
+          showBlockImages(blockId);
+        });
+      });
+    });
+  </script>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Block Images</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="blockCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="carousel-inner" id="carouselInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#blockCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#blockCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
